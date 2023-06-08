@@ -16,9 +16,8 @@ class UserAkses
     public function handle(Request $request, Closure $next, $role): Response
     {
         if (auth()->user()->role == $role) {
-            # code...
             return $next($request);
         }
-        redirect('admin');
-    }
+        return redirect('admin');
+    } 
 }
