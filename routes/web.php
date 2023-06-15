@@ -15,17 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// });
-
 Route::middleware(['guest'])->group(function(){
     Route::get('/', [SesiController::class, 'index'])->name('login');
     Route::post('/', [SesiController::class, 'login']);
+    Route::get('/register', [SesiController::class, 'registerForm'])->name('register');
+    Route::post('/register', [SesiController::class, 'register'])->name('register.submit');
+    // Password reset routes
+    Route::get('/forgot-password', [SesiController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('/forgot-password', [SesiController::class, 'forgotPassword'])->name('password.email');
+    Route::get('/reset-password/{token}', [SesiController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [SesiController::class, 'resetPassword'])->name('password.update');
 });
-// Route::get('/home', function(){
-//     return redirect('/admin');
-// });
 
 Route::middleware(['auth'])->group(function(){
     Route::get('/home', [AdminController::class, 'index']);
