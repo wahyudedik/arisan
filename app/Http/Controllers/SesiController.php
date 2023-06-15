@@ -79,7 +79,7 @@ class SesiController extends Controller
         Auth::login($user);
 
         // Redirect to the appropriate page after registration
-        return redirect('/member')->with('success', 'Registration successful. Please login.');
+        return redirect('/')->with('success', 'Registration successful. Please login.');
     }
 
     public function forgotPassword(Request $request)

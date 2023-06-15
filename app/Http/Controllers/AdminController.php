@@ -8,21 +8,21 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function index (){
-        return view('admin');
+        return view('home');
     }
 
     public function superadmin()
     {
-        return view('admin');
+        return view('home');
     }
 
     public function admin()
     {
-        return view('admin');
+        return view('home');
     }
 
     public function member()
     {
-        return view('admin');
+        return view('home');
     }
 }
