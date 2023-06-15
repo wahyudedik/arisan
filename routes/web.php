@@ -23,14 +23,14 @@ Route::middleware(['guest'])->group(function(){
     Route::get('/', [SesiController::class, 'index'])->name('login');
     Route::post('/', [SesiController::class, 'login']);
 });
-Route::get('/home', function(){
-    return redirect('/admin');
-});
+// Route::get('/home', function(){
+//     return redirect('/admin');
+// });
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('/admin', [AdminController::class, 'index']);
-    Route::get('/admin/superadmin', [AdminController::class, 'superadmin'])->middleware('userAkses:superadmin');
-    Route::get('/admin/admin', [AdminController::class, 'admin'])->middleware('userAkses:admin');
-    Route::get('/admin/member', [AdminController::class, 'member'])->middleware('userAkses:member');
+    Route::get('/home', [AdminController::class, 'index']);
+    Route::get('/superadmin', [AdminController::class, 'superadmin'])->middleware('userAkses:superadmin');
+    Route::get('/admin', [AdminController::class, 'admin'])->middleware('userAkses:admin');
+    Route::get('/member', [AdminController::class, 'member'])->middleware('userAkses:member');
     Route::get('/logout', [SesiController::class, 'logout']);
 });
