@@ -37,7 +37,7 @@
                                     </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{ url('/member/profile') }}">Profile</a>
-                                        <a class="dropdown-item" href="{{ url('/member/pembayaran') }}">Pembayaran</a>
+                                        {{-- <a class="dropdown-item" href="{{ url('/member/pembayaran') }}">Pembayaran</a> --}}
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ url('/logout') }}">Logout</a>
                                     </div>
