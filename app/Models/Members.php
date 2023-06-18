@@ -16,5 +16,6 @@ class Members extends Model
         'no_hp',
         'gambar',
         'rekening',
+        'ikut_arisan',
     ];
 }

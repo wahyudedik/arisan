@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('no_hp');
             $table->string('gambar');
             $table->string('rekening');
+            $table->boolean('ikut_arisan')->default(false);
             $table->timestamps();
         });
     }

@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SesiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SesiController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MembersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/home', [AdminController::class, 'index']);
     Route::get('/superadmin', [AdminController::class, 'superadmin'])->middleware('userAkses:superadmin');
     Route::get('/admin', [AdminController::class, 'admin'])->middleware('userAkses:admin');
+    Route::get('/admin/members', [MembersController::class, 'approveMember'])->middleware('userAkses:admin');
     Route::get('/member', [AdminController::class, 'member'])->middleware('userAkses:member');
     Route::get('/logout', [SesiController::class, 'logout']);
 });
