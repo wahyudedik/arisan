@@ -1,4 +1,4 @@
-@extends('dashboard.memberlayout')
+@extends('layout')
 
 @section('content')
     <div class="row">

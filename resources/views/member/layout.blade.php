@@ -26,7 +26,7 @@
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0"> Arisan App <small>1.0</small></h1>
+                            <a href="{{ route('index') }}"><h1 class="m-0"> Arisan App <small>1.0</small></h1></a>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -36,7 +36,7 @@
                                         {{ auth()->user()->name }}
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ url('/member/profile') }}">Profile</a>
+                                        <a class="dropdown-item" href="{{ route('member.profile') }}">Profile</a>
                                         {{-- <a class="dropdown-item" href="{{ url('/member/pembayaran') }}">Pembayaran</a> --}}
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ url('/logout') }}">Logout</a>

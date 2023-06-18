@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\MembersController;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +29,16 @@ Route::middleware(['guest'])->group(function(){
 });
 
 Route::middleware(['auth'])->group(function(){
-    Route::get('/home', [AdminController::class, 'index']);
-    Route::get('/superadmin', [AdminController::class, 'superadmin'])->middleware('userAkses:superadmin');
-    Route::get('/admin', [AdminController::class, 'admin'])->middleware('userAkses:admin');
+    // route default
+    Route::get('/home', [AdminController::class, 'index'])->name('index');
+    // route superadmin
+    Route::get('/superadmin', [AdminController::class, 'index'])->middleware('userAkses:superadmin');
+    // route admin
+    Route::get('/admin', [AdminController::class, 'index'])->middleware('userAkses:admin');
     Route::get('/admin/members', [MembersController::class, 'approveMember'])->middleware('userAkses:admin');
-    Route::get('/member', [AdminController::class, 'member'])->middleware('userAkses:member');
+    // route member
+    Route::get('/member', [AdminController::class, 'index'])->middleware('userAkses:member');
+    Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile')->middleware('userAkses:member');
+    // route logout
     Route::get('/logout', [SesiController::class, 'logout']);
 });

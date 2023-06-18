@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Member;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 
 class SesiController extends Controller
@@ -45,7 +46,17 @@ class SesiController extends Controller
             } else if (Auth::user()->role === 'admin') {
                 return redirect('admin');
             } else if (Auth::user()->role === 'member') {
-                return redirect('member');
+                // Setelah login, cek apakah data member sudah ada berdasarkan user_id
+                $user = Auth::user();
+                $member = Member::where('user_id', $user->id)->first();
+
+                if (!$member) {
+                    // Jika data member belum ada, tampilkan tampilan "Tolong lengkapi data profile dulu"
+                    return view('member.profile');
+                } else {
+                    // Jika data member sudah ada, tampilkan tampilan "member.dashboard"
+                    return view('member.dashboard');
+                }
             }
         }else{
             return redirect('')->withErrors('Email Atau Password Salah')->withInput();
@@ -78,8 +89,29 @@ class SesiController extends Controller
 
         Auth::login($user);
 
-        // Redirect to the appropriate page after registration
-        return redirect('/')->with('success', 'Registration successful. Please login.');
+        // Setelah pendaftaran, cek apakah data member sudah ada berdasarkan user_id
+        $member = Member::where('user_id', $user->id)->first();
+
+        if (!$member) {
+            // Jika data member belum ada, tambahkan data member baru
+            $member = new Member();
+            $member->user_id = $user->id;
+            // Tambahkan kolom-kolom lain sesuai kebutuhan
+            $member->alamat = 'Alamat Default';
+            $member->no_hp = 'Nomor HP Default';
+            $member->gambar = 'Gambar Default';
+            $member->no_rekening = 'Nomor Rekening Default';
+            $member->status = 'false';
+            $member->save();
+            // Jika data member belum ada, tampilkan tampilan "Tolong lengkapi data profile dulu"
+            return view('member.profile');
+        } else {
+            // Jika data member sudah ada, tampilkan tampilan yang diinginkan
+            return view('member.dashboard');
+        }
+
+        // // Redirect to the appropriate page after registration
+        // return redirect('/')->with('success', 'Registration successful. Please login.');
     }
 
     public function forgotPassword(Request $request)

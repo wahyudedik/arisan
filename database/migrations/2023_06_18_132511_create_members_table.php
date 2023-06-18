@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('alamat');
-            $table->string('no_hp');
-            $table->string('gambar');
-            $table->string('rekening');
-            $table->boolean('ikut_arisan')->default(false);
+            $table->string('alamat')->default('isi alamat kamu');
+            $table->string('no_hp')->default('08***');
+            $table->string('no_rekening')->default('76**');
+            $table->string('gambar')->default('contoh.img');
+            $table->string('status')->default('false');
             $table->timestamps();
         });
     }

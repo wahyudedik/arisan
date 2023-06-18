@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Members extends Model
+class Member extends Model
 {
-    // use HasFactory;
+    //use HasFactory;
+
     protected $table = 'members';
 
     protected $fillable = [
@@ -16,6 +17,6 @@ class Members extends Model
         'no_hp',
         'gambar',
         'rekening',
-        'ikut_arisan',
+        'status',
     ];
 }
