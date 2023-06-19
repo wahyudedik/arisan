@@ -39,6 +39,9 @@ Route::middleware(['auth'])->group(function(){
     // route member
     Route::get('/member', [AdminController::class, 'index'])->middleware('userAkses:member');
     Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile')->middleware('userAkses:member');
+    Route::put('/profile/{member}', [MemberController::class, 'update'])->name('member.update')->middleware('userAkses:member');
+    Route::put('/member/{id}', [MemberController::class, 'updateProfile'])->name('member.updateProfile')->middleware('userAkses:member');
+
     // route logout
     Route::get('/logout', [SesiController::class, 'logout']);
 });

@@ -7,7 +7,7 @@
             <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
                     <div class="text-center">
-                        <img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg"
+                        <img class="profile-user-img img-fluid img-circle" src="images/{{ $member->gambar }}"
                             alt="User profile picture">
                     </div>
 
@@ -15,13 +15,15 @@
 
                     <p class="text-muted text-center">{{ '@' . Auth::user()->name }}</p>
 
-                    {{-- <form method="POST" action="{{ route('update.photo') }}" enctype="multipart/form-data"> --}}
-                    @csrf
-                    <div class="form-group">
-                        <label for="photo">Edit Foto</label>
-                        <input type="file" class="form-control-file" id="photo" name="photo">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+                    <form method="POST" action="{{ route('member.updateProfile', $member->id) }}"
+                        enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group">
+                            <label for="photo">Edit Foto</label>
+                            <input type="file" class="form-control-file" id="photo" name="gambar">
+                        </div>
+                        <button type="submit" name="submit" class="btn btn-primary btn-block">Simpan</button>
                     </form>
                 </div>
                 <!-- /.card-body -->
@@ -84,41 +86,46 @@
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="active tab-pane" id="settings">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" action="{{ route('member.update', $member->id) }}" method="POST">
+                                @method('PUT')
+                                @csrf
                                 <div class="form-group row">
                                     <label for="inputName" class="col-sm-2 col-form-label">Nama</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputName" placeholder="Nama">
+                                        <input type="text" name="name" value="{{ $nama }}"
+                                            class="form-control" id="inputName" placeholder="Nama">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                        <input type="email" value="{{ $email }}" name="email"
+                                            class="form-control" id="inputEmail" placeholder="Email">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputName2" class="col-sm-2 col-form-label">Alamat</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="inputExperience" placeholder="Alamat"></textarea>
+                                        <textarea class="form-control" name="alamat" id="inputExperience" placeholder="Alamat">{{ $member->alamat }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputExperience" class="col-sm-2 col-form-label">No HP</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputName2" placeholder="No.HP">
+                                        <input type="text" name="no_hp" value="{{ $member->no_hp }}"
+                                            class="form-control" id="inputName2" placeholder="No.HP">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputSkills" class="col-sm-2 col-form-label">No Rekening</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="No.Rekening"
-                                            placeholder="Skills">
+                                        <input type="text" value="{{ $member->no_rekening }}" name="no_rekening"
+                                            class="form-control" id="No.Rekening" placeholder="No Rekening">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="offset-sm-2 col-sm-10">
-                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                        <button type="submit" name="submit" class="btn btn-danger">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -133,4 +140,42 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Pesan error
+        @if ($errors->any())
+            $(document).ready(function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '{{ $errors->first() }}'
+                });
+            });
+        @endif
+
+        // Pesan sukses
+        @if (session('success'))
+            $(document).ready(function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '{{ session('success') }}'
+                });
+            });
+        @endif
+
+        $('form').submit(function() {
+            Swal.fire({
+                title: 'Loading...',
+                allowOutsideClick: false,
+                showConfirmButton: false, // Remove the OK button
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                    Swal.getContent().querySelector('p').innerHTML =
+                        '<div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>';
+                }
+            });
+        });
+    </script>
 @endsection
