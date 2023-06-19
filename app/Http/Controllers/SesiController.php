@@ -41,23 +41,7 @@ class SesiController extends Controller
         $remember = $request->has('remember'); //Check if "Remember Me" checkbox is checked
 
         if (Auth::attempt($infologin, $remember)) {
-            if (Auth::user()->role === 'superadmin') {
-                return redirect('superadmin');
-            } else if (Auth::user()->role === 'admin') {
-                return redirect('admin');
-            } else if (Auth::user()->role === 'member') {
-                // Setelah login, cek apakah data member sudah ada berdasarkan user_id
-                $user = Auth::user();
-                $member = Member::where('user_id', $user->id)->first();
-
-                if (!$member) {
-                    // Jika data member belum ada, tampilkan tampilan "Tolong lengkapi data profile dulu"
-                    return view('member.profile');
-                } else {
-                    // Jika data member sudah ada, tampilkan tampilan "member.dashboard"
-                    return view('member.dashboard');
-                }
-            }
+            return redirect('/');
         }else{
             return redirect('')->withErrors('Email Atau Password Salah')->withInput();
         }
@@ -87,8 +71,6 @@ class SesiController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        Auth::login($user);
-
         // Setelah pendaftaran, cek apakah data member sudah ada berdasarkan user_id
         $member = Member::where('user_id', $user->id)->first();
 
@@ -96,22 +78,10 @@ class SesiController extends Controller
             // Jika data member belum ada, tambahkan data member baru
             $member = new Member();
             $member->user_id = $user->id;
-            // Tambahkan kolom-kolom lain sesuai kebutuhan
-            $member->alamat = 'Alamat Default';
-            $member->no_hp = 'Nomor HP Default';
-            $member->gambar = 'Gambar Default';
-            $member->no_rekening = 'Nomor Rekening Default';
-            $member->status = 'false';
             $member->save();
             // Jika data member belum ada, tampilkan tampilan "Tolong lengkapi data profile dulu"
-            return view('member.profile');
-        } else {
-            // Jika data member sudah ada, tampilkan tampilan yang diinginkan
-            return view('member.dashboard');
+            return redirect('/')->with('success', 'Registration successful. Please login.');
         }
-
-        // // Redirect to the appropriate page after registration
-        // return redirect('/')->with('success', 'Registration successful. Please login.');
     }
 
     public function forgotPassword(Request $request)

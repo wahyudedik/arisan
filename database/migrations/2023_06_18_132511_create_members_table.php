@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('alamat')->default('isi alamat kamu');
             $table->string('no_hp')->default('08***');
             $table->string('no_rekening')->default('76**');
-            $table->string('gambar')->default('contoh.img');
+            $table->string('gambar')->default('profile.jpg');
             $table->string('status')->default('false');
             $table->timestamps();
         });

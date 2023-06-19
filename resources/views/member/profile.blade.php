@@ -136,6 +136,43 @@
                 </div><!-- /.card-body -->
             </div>
             <!-- /.card -->
+
+            @if ($member->status === true)
+                <div class="card card-success">
+                    <div class="card-body">Akun Sudah Aktif</div>
+                </div>
+            @else
+                <div class="card card-danger">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>Akun Belum Aktif</div>
+                        {{-- <div class="ml-auto">
+                            <button class="btn btn-primary" type="submit" id="myButton">Aktifkan</button>
+                            <script>
+                                const button = document.getElementById("myButton");
+
+                                // Check if button state is stored in localStorage
+                                const storedState = localStorage.getItem("buttonState");
+                                if (storedState) {
+                                    button.innerText = storedState;
+                                }
+
+                                button.addEventListener("click", function() {
+                                    if (button.innerText === "Aktifkan") {
+                                        button.innerText = "Processing";
+                                        // Send activation request form
+                                        var form = document.getElementById("activationForm");
+                                        form.submit();
+
+                                        // Store button state in localStorage
+                                        localStorage.setItem("buttonState", button.innerText);
+                                    }
+                                });
+                            </script>
+                        </div> --}}
+                    </div>
+                </div>
+            @endif
+
         </div>
         <!-- /.col -->
     </div>

@@ -32,12 +32,12 @@ Route::middleware(['auth'])->group(function(){
     // route default
     Route::get('/home', [AdminController::class, 'index'])->name('index');
     // route superadmin
-    Route::get('/superadmin', [AdminController::class, 'index'])->middleware('userAkses:superadmin');
+    Route::get('/superadmin', [AdminController::class, 'index'])->name('superadmin')->middleware('userAkses:superadmin');
     // route admin
-    Route::get('/admin', [AdminController::class, 'index'])->middleware('userAkses:admin');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware('userAkses:admin');
     Route::get('/admin/members', [MembersController::class, 'approveMember'])->middleware('userAkses:admin');
     // route member
-    Route::get('/member', [AdminController::class, 'index'])->middleware('userAkses:member');
+    Route::get('/member', [AdminController::class, 'index'])->name('member')->middleware('userAkses:member');
     Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile')->middleware('userAkses:member');
     Route::put('/profile/{member}', [MemberController::class, 'update'])->name('member.update')->middleware('userAkses:member');
     Route::put('/member/{id}', [MemberController::class, 'updateProfile'])->name('member.updateProfile')->middleware('userAkses:member');

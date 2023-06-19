@@ -9,11 +9,11 @@ class AdminController extends Controller
 {
     public function index (){
         if (Auth::user()->role == 'superadmin') {
-            return view('superadmin.dashboard');
+            return view('superadmin/dashboard');
         } elseif (Auth::user()->role == 'admin') {
-            return view('admin.dashboard');
+            return view('admin/dashboard');
         } elseif (Auth::user()->role == 'member') {
-            return view('member.dashboard');
+            return view('member/dashboard');
         }
     }
 
