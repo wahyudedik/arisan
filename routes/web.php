@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MemberController;
@@ -35,7 +36,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/superadmin', [AdminController::class, 'index'])->name('superadmin')->middleware('userAkses:superadmin');
     // route admin
     Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware('userAkses:admin');
-    Route::get('/admin/members', [MembersController::class, 'approveMember'])->middleware('userAkses:admin');
     // route member
     Route::get('/member', [AdminController::class, 'index'])->name('member')->middleware('userAkses:member');
     Route::get('/profile', [MemberController::class, 'profile'])->name('member.profile')->middleware('userAkses:member');
